@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Snek
+    uniqueID: 1458289311
+    locked: 0
+  - name: Objects
+    uniqueID: 3106053309
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
