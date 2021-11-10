@@ -7,40 +7,74 @@ public class GraphScript : MonoBehaviour
     // Start is called before the first frame update
     public GameObject hex;
     public GameObject edgeHex;
-    public int IterationsLeft;
+    public int IterationsToDo;
+    private Vector3[] _newobjects = new Vector3[6];
+    
+    private Hex _self;
+    Vector3 newHexPos;
+    bool foundPrevious;
+
     void Start()
     {
-        
     }
 
     // Update is called once per frame
-    public void Iterate(int InterationsLeft)
+    public void IterateStart(int iterationsLeft, int direction)
     {
-        if (InterationsLeft > 0)
+        _self = transform.gameObject.GetComponent<Hex>();
+        GameObject toCreate = hex;
+        if (iterationsLeft > 2)
         {
-            for (int connections = 0; connections < 7; connections++)
+            toCreate = hex;
+            foundPrevious = false;
+            newHexPos = gameObject.transform.GetChild(direction).transform.position;
+            for (int i = 0; i < transform.parent.childCount; i++)
             {
-                Transform newHexPos = gameObject.transform.GetChild(connections).transform;
-                bool foundPrevious = false;
-                for (int i = 0; i <= transform.parent.childCount; i++)
+                GameObject potentialLink = transform.parent.GetChild(i).gameObject;
+                if (potentialLink.transform.position == newHexPos)
                 {
-                    if (transform.parent.GetChild(i).transform.position == newHexPos.position)
-                    {
-                        foundPrevious = true;
-                        break;
-                    }
+                    foundPrevious = true;
+                    _self.connections[direction] = potentialLink;
+                    break;
                 }
-                GameObject newHex = Instantiate(hex);
-                newHex.gameObject.GetComponent<GraphScript>().IterationsLeft = IterationsLeft -1;
-                newHex.transform.position = newHexPos.position;
+            }
+            if (!foundPrevious)
+            {
+                int modifier = Random.Range(1, 1);
+                GameObject newHex = Instantiate(toCreate, transform.parent);
+                newHex.transform.position = newHexPos;
+                _self.connections[direction] = newHex;
+                newHex.gameObject.GetComponent<GraphScript>().IterationsToDo = IterationsToDo - modifier;
+                if (_self.Direction + 1 < 6)
+                {
+                    newHex.gameObject.GetComponent<GraphScript>().IterateStart(IterationsToDo - modifier, _self.Direction + 1);
+                }
+                else
+                {
+                    newHex.gameObject.GetComponent<GraphScript>().IterateStart(IterationsToDo - modifier, 0);
+                }
+                newHex.gameObject.GetComponent<GraphScript>().IterateStart(IterationsToDo - modifier, _self.Direction);
             }
         }
-        else
+        else if (iterationsLeft > 0)
         {
-            /*Where no hexes already exist, Instantiate(edgeHex
-             *
-             * 
-             */
+            toCreate = edgeHex;
+            foundPrevious = false;
+            newHexPos = gameObject.transform.GetChild(direction).transform.position;
+            for (int i = 0; i < transform.parent.childCount; i++)
+            {
+                GameObject potentialLink = transform.parent.GetChild(i).gameObject;
+                if (potentialLink.transform.position == newHexPos)
+                {
+                    foundPrevious = true;
+                    break;
+                }
+            }
+            if (!foundPrevious)
+            {
+                GameObject newHex = Instantiate(toCreate, transform.parent);
+                newHex.transform.position = newHexPos;
+            }
         }
     }
 }

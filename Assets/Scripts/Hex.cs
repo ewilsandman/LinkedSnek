@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,5 +7,5 @@ using UnityEngine;
         public int Direction;
         public bool Snek;
         public GameObject Thing;
-        public Hex[] Connections;
+       public GameObject[] connections => new GameObject[6];
  }

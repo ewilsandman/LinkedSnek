@@ -29,22 +29,13 @@ public class WorldScript : MonoBehaviour
 
     void Initialize()
     {
-        for (int connections = 0; connections < 7; connections++)
+        GameObject OriginHex = Instantiate(hex, transform);
+        OriginHex.transform.position = transform.position;
+        OriginHex.gameObject.GetComponent<GraphScript>().IterationsToDo = mapSize;
+        for (int i = 0; i < 6; i++)
         {
-            Transform newHexPos = gameObject.transform.GetChild(connections).transform;
-            bool foundPrevious = false;
-            for (int i = 0; i <= transform.childCount; i++)
-            {
-                if (transform.GetChild(i).transform.position == newHexPos.position)
-                {
-                    foundPrevious = true;
-                    break;
-                }
-            }
-            GameObject newHex = Instantiate(hex, transform);
-            newHex.gameObject.GetComponent<Hex>().Direction = connections;
-            newHex.transform.position = newHexPos.position;
-            newHex.gameObject.GetComponent<GraphScript>().Iterate(mapSize -1);
+            OriginHex.gameObject.GetComponent<Hex>().Direction = i;
+            OriginHex.gameObject.GetComponent<GraphScript>().IterateStart(mapSize, i);
         }
     }
 }
