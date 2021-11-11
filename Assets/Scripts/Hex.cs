@@ -6,6 +6,7 @@ using UnityEngine;
  {
         public int Direction;
         public bool Snek;
+        public bool Wall;
         public GameObject Thing;
-       public GameObject[] connections => new GameObject[6];
+        public GameObject[] connections = new GameObject[6];
  }

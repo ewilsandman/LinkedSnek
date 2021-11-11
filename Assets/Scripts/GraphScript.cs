@@ -34,7 +34,6 @@ public class GraphScript : MonoBehaviour
                 if (potentialLink.transform.position == newHexPos)
                 {
                     foundPrevious = true;
-                    _self.connections[direction] = potentialLink;
                     break;
                 }
             }
@@ -43,7 +42,6 @@ public class GraphScript : MonoBehaviour
                 int modifier = Random.Range(1, 1);
                 GameObject newHex = Instantiate(toCreate, transform.parent);
                 newHex.transform.position = newHexPos;
-                _self.connections[direction] = newHex;
                 newHex.gameObject.GetComponent<GraphScript>().IterationsToDo = IterationsToDo - modifier;
                 if (_self.Direction + 1 < 6)
                 {
@@ -75,6 +73,22 @@ public class GraphScript : MonoBehaviour
                 GameObject newHex = Instantiate(toCreate, transform.parent);
                 newHex.transform.position = newHexPos;
             }
+        }
+    }
+    public void Connect()
+    {
+        for (int a = 0; a < 6; a++)
+        {
+            newHexPos = gameObject.transform.GetChild(a).transform.position;
+            for (int i = 0; i < transform.parent.childCount; i++)
+            {
+                GameObject potentialLink = transform.parent.GetChild(i).gameObject;
+                if (potentialLink.transform.position == newHexPos)
+                {
+                    _self.connections[a] = potentialLink.gameObject;
+                    break;
+                }
+            } 
         }
     }
 }
