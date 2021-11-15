@@ -5,23 +5,23 @@ using UnityEngine;
 
 public class SnekController : MonoBehaviour
 {
-    public GameObject worldController;
+    public WorldScript worldController;
+    public FoodScript foodController;
     public GameObject arrow;
-    public GameObject startOfSnek;
+    public Camera mainCamera;
+    public Snek snekStart;
     public float timeBetweenMoves;
 
     private GameObject _startPos;
     private int _nextDirection;
-    private int _nextPosition;
-    private Snek _snekStart;
     private float _nextMoveTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        _startPos = worldController.GetComponent<WorldScript>().OriginHex;
-        _snekStart = startOfSnek.GetComponent<Snek>();
-        _snekStart.currentHex = _startPos.GetComponent<Hex>();
+        _startPos = worldController.OriginHex;
+        snekStart.currentHex = _startPos.GetComponent<Hex>();
+        mainCamera.transform.SetParent(snekStart.transform);
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class SnekController : MonoBehaviour
                 _nextDirection -= 1;
             }
         }
-        arrow.transform.position = _snekStart.GetComponent<Snek>().currentHex.connections[_nextDirection].transform.position;
+        arrow.transform.position = snekStart.currentHex.connections[_nextDirection].transform.position;
         if (_nextMoveTime > timeBetweenMoves)
         {
             Move();
@@ -60,9 +60,29 @@ public class SnekController : MonoBehaviour
             _nextMoveTime += Time.deltaTime;
         }
     }
-
     private void Move()
     {
-        _snekStart.GetComponent<Snek>().Move(_nextDirection);
+        if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Food)
+        {
+            snekStart.Grow(_nextDirection);
+            foodController.FoodChange();
+        }
+        else if (snekStart.currentHex.connections[_nextDirection].CompareTag("Wall"))
+        {
+            Death();
+        }
+        else if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Snek)
+        {
+            Death();
+        }
+        else
+        {
+            snekStart.Move(_nextDirection);
+        }
+    }
+    private void Death()
+    {
+        
+        Debug.Log("you is kil");
     }
 }

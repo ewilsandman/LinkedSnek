@@ -14,7 +14,6 @@ public class WorldScript : MonoBehaviour
    // public GameObject blocker; // may not use
 
     public GameObject OriginHex;
-    public GameObject SnekReference;
 
     private Hex[,] _hexes;
     public Hex[,] Hexes => _hexes;
