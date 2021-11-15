@@ -18,8 +18,11 @@ public class Snek : MonoBehaviour
         {
             _nextSnek.Move(previousPos);
         }
+        else
+        {
+            currentHex.Snek = false;
+        }
         transform.position = currentHex.connections[newDirection].transform.position;
-        currentHex.Snek = false;
         currentHex = currentHex.connections[newDirection].GetComponent<Hex>();
         currentHex.Snek = true;
         previousPos = newDirection;
@@ -35,11 +38,13 @@ public class Snek : MonoBehaviour
         {
             _instantiatedSegment = Instantiate(newSnakeSegment);
             _instantiatedSegment.GetComponent<Snek>().currentHex = currentHex;
+            _instantiatedSegment.GetComponent<Snek>().currentHex.Snek = true;
             _instantiatedSegment.transform.position = transform.position;
             _nextSnek = _instantiatedSegment.GetComponent<Snek>();
         }
         transform.position = currentHex.connections[newDirection].transform.position;
         currentHex = currentHex.connections[newDirection].GetComponent<Hex>();
+        currentHex.Snek = true;
         previousPos = newDirection;
     }
 }

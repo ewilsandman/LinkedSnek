@@ -2,41 +2,37 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WorldScript : MonoBehaviour
 {
     public int mapSize;
     
     public GameObject hex;
-   // public GameObject food;
-   // public GameObject blocker; // may not use
+    public GameObject originHex;
 
-    public GameObject OriginHex;
-
-    private Hex[,] _hexes;
-    public Hex[,] Hexes => _hexes;
+    private GameObject _data;
 
     // Start is called before the first frame update
     void Awake()
     {
+        _data = GameObject.FindWithTag("Data");
+        if (_data)
+        {
+            mapSize = _data.GetComponent<StartMenuScript>().size;
+        }
         Initialize();
     }
-
-    // Update is called once per frame
-    void Update()
-    { }
-
     void Initialize()
     {
-        OriginHex = Instantiate(hex, transform);
-        OriginHex.transform.position = transform.position;
-        OriginHex.gameObject.GetComponent<GraphScript>().IterationsToDo = mapSize;
+        originHex = Instantiate(hex, transform);
+        originHex.transform.position = transform.position;
+        originHex.gameObject.GetComponent<GraphScript>().IterationsToDo = mapSize;
         for (int i = 0; i < 6; i++)
         {
-            OriginHex.gameObject.GetComponent<Hex>().Direction = i;
-            OriginHex.gameObject.GetComponent<GraphScript>().IterateStart(mapSize, i);
+            originHex.gameObject.GetComponent<Hex>().Direction = i;
+            originHex.gameObject.GetComponent<GraphScript>().IterateStart(mapSize, i);
         }
 
         int childCount = transform.childCount;
@@ -51,5 +47,13 @@ public class WorldScript : MonoBehaviour
                 child.GetComponent<GraphScript>().Connect();
             }
         }
+    }
+    public void Death()
+    {
+        if (_data)
+        {
+            Destroy(_data.gameObject);
+        }
+        SceneManager.LoadScene("GameOver");
     }
 }

@@ -8,20 +8,25 @@ public class SnekController : MonoBehaviour
     public WorldScript worldController;
     public FoodScript foodController;
     public GameObject arrow;
-    public Camera mainCamera;
     public Snek snekStart;
+    public ScoreScript scoreKeeper;
     public float timeBetweenMoves;
 
     private GameObject _startPos;
+    private GameObject _data;
     private int _nextDirection;
     private float _nextMoveTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        _startPos = worldController.OriginHex;
+        _data = GameObject.FindWithTag("Data");
+        if (_data)
+        {
+            timeBetweenMoves = _data.GetComponent<StartMenuScript>().speed;
+        }
+        _startPos = worldController.originHex;
         snekStart.currentHex = _startPos.GetComponent<Hex>();
-        mainCamera.transform.SetParent(snekStart.transform);
     }
 
     // Update is called once per frame
@@ -64,25 +69,21 @@ public class SnekController : MonoBehaviour
     {
         if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Food)
         {
+            scoreKeeper.ScoreChange(10);
             snekStart.Grow(_nextDirection);
             foodController.FoodChange();
         }
         else if (snekStart.currentHex.connections[_nextDirection].CompareTag("Wall"))
         {
-            Death();
+            worldController.Death();
         }
         else if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Snek)
         {
-            Death();
+           worldController.Death();
         }
         else
         {
             snekStart.Move(_nextDirection);
         }
-    }
-    private void Death()
-    {
-        
-        Debug.Log("you is kil");
     }
 }
