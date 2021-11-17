@@ -13,16 +13,11 @@ public class GraphScript : MonoBehaviour
     private Hex _self;
     Vector3 newHexPos;
     bool foundPrevious;
-
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
+    
     public void IterateStart(int iterationsLeft, int direction)
     {
         _self = transform.gameObject.GetComponent<Hex>();
-        GameObject toCreate = hex;
+        GameObject toCreate;
         if (iterationsLeft > 2)
         {
             toCreate = hex;
