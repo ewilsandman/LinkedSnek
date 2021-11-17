@@ -22,10 +22,11 @@ public class WorldScript : MonoBehaviour
         {
             mapSize = _data.GetComponent<StartMenuScript>().size;
         }
-        Initialize();
+        GetComponent<GridScript>().Generate(mapSize);
     }
-    void Initialize()
+   /* void Initialize() // not used, made for the Graph script
     {
+        
         originHex = Instantiate(hex, transform);
         originHex.transform.position = transform.position;
         originHex.gameObject.GetComponent<GraphScript>().IterationsToDo = mapSize;
@@ -47,7 +48,8 @@ public class WorldScript : MonoBehaviour
                 child.GetComponent<GraphScript>().Connect();
             }
         }
-    }
+        
+    }*/
     public void Death()
     {
         if (_data)

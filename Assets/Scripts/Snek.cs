@@ -22,8 +22,8 @@ public class Snek : MonoBehaviour
         {
             currentHex.Snek = false;
         }
-        transform.position = currentHex.connections[newDirection].transform.position;
-        currentHex = currentHex.connections[newDirection].GetComponent<Hex>();
+        //transform.position = currentHex
+        //currentHex = currentHex
         currentHex.Snek = true;
         previousPos = newDirection;
     }
@@ -42,8 +42,8 @@ public class Snek : MonoBehaviour
             _instantiatedSegment.transform.position = transform.position;
             _nextSnek = _instantiatedSegment.GetComponent<Snek>();
         }
-        transform.position = currentHex.connections[newDirection].transform.position;
-        currentHex = currentHex.connections[newDirection].GetComponent<Hex>();
+      //  transform.position = currentHex.connections[newDirection].transform.position;
+      //  currentHex = currentHex.connections[newDirection].GetComponent<Hex>();
         currentHex.Snek = true;
         previousPos = newDirection;
     }

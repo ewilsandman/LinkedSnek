@@ -167,11 +167,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldController: {fileID: 1355251029}
+  grid: {fileID: 1355251030}
   foodController: {fileID: 664369804}
   arrow: {fileID: 1126890081}
   snekStart: {fileID: 700113093}
-  timeBetweenMoves: 1
   scoreKeeper: {fileID: 1025291987}
+  timeBetweenMoves: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &664369803
 Transform:
   m_ObjectHideFlags: 0
@@ -300,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   food: {fileID: 675458178152450158, guid: cb0863ec2b2dd8847883079561333f30, type: 3}
   boardController: {fileID: 1355251027}
+  foodPosition: {fileID: 0}
 --- !u!1 &700113090
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,6 +517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1355251028}
   - component: {fileID: 1355251029}
+  - component: {fileID: 1355251030}
   m_Layer: 0
   m_Name: WorldController
   m_TagString: Untagged
@@ -551,3 +554,17 @@ MonoBehaviour:
   mapSize: 8
   hex: {fileID: 6453347199366056371, guid: a12b3089cbdef66408d2c36e8fdc9d26, type: 3}
   originHex: {fileID: 0}
+--- !u!114 &1355251030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355251027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e35d1d20872e34da92c414da50396f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hex: {fileID: 6453347199366056371, guid: a12b3089cbdef66408d2c36e8fdc9d26, type: 3}
+  edgeHex: {fileID: 787345365709281695, guid: f8f067adecf8d4b47a217319efbf6180, type: 3}

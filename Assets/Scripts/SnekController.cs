@@ -6,6 +6,7 @@ using UnityEngine;
 public class SnekController : MonoBehaviour
 {
     public WorldScript worldController;
+    public GridScript grid;
     public FoodScript foodController;
     public GameObject arrow;
     public Snek snekStart;
@@ -25,7 +26,7 @@ public class SnekController : MonoBehaviour
         {
             timeBetweenMoves = _data.GetComponent<StartMenuScript>().speed;
         }
-        _startPos = worldController.originHex;
+        _startPos = grid.HexGrid[(0,0,0)];
         snekStart.currentHex = _startPos.GetComponent<Hex>();
     }
 
@@ -54,7 +55,7 @@ public class SnekController : MonoBehaviour
                 _nextDirection -= 1;
             }
         }
-        arrow.transform.position = snekStart.currentHex.connections[_nextDirection].transform.position;
+        arrow.transform.position = grid.GridTranslation(snekStart.currentHex.HexPosition, _nextDirection).transform.position;
         if (_nextMoveTime > timeBetweenMoves)
         {
             Move();
@@ -67,21 +68,22 @@ public class SnekController : MonoBehaviour
     }
     private void Move()
     {
-        if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Food)
+        grid.GridTranslation(snekStart.currentHex.HexPosition, _nextDirection);
+       // if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Food)
         {
             scoreKeeper.ScoreChange(10);
             snekStart.Grow(_nextDirection);
             foodController.FoodChange();
         }
-        else if (snekStart.currentHex.connections[_nextDirection].CompareTag("Wall"))
+       // else if (snekStart.currentHex.connections[_nextDirection].CompareTag("Wall"))
         {
             worldController.Death();
         }
-        else if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Snek)
+      //  else if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Snek)
         {
            worldController.Death();
         }
-        else
+      //  else
         {
             snekStart.Move(_nextDirection);
         }

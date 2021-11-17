@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SeekerScript : MonoBehaviour
 {
-    private Hex _initialHex; // same as current position of Snek
+    /*private Hex _initialHex; // same as current position of Snek
     private Hex _targetHex; // same as food is currently on
 
     public Snek snekHead;
@@ -15,7 +15,7 @@ public class SeekerScript : MonoBehaviour
 
     private Queue<Hex> _pathToTarget = new Queue<Hex>();
   /*private List<Hex> _uncheckedHexes = new List<Hex>(); // very useful lol
-    private List<Hex> moveableHexes = new List<Hex>(); */
+    private List<Hex> moveableHexes = new List<Hex>(); #1#
     private Dictionary<Hex, Hex> cameFrom = new Dictionary<Hex, Hex>();
     private Queue<Hex> frontier = new Queue<Hex>();
     private Hex current;
@@ -66,5 +66,5 @@ public class SeekerScript : MonoBehaviour
             //  _pathToTarget.reverse() // optional
         }
         return _pathToTarget;
-    }
+    }*/
 }

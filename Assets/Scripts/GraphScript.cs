@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GraphScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /* I think this system is really cool so I saved it but it is an accident
+    // note to self, read the instructions before coding
     public GameObject hex;
     public GameObject edgeHex;
     public int IterationsToDo;
-    private Vector3[] _newobjects = new Vector3[6];
-    
+
     private Hex _self;
     Vector3 newHexPos;
     bool foundPrevious;
@@ -85,5 +85,5 @@ public class GraphScript : MonoBehaviour
                 }
             } 
         }
-    }
+    }*/
 }
