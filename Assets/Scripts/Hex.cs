@@ -9,4 +9,5 @@ using UnityEngine;
         public bool Food;
         //public GameObject Thing;
         public (int, int, int) HexPosition;
+        
  }

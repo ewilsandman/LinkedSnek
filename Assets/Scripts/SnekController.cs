@@ -26,7 +26,8 @@ public class SnekController : MonoBehaviour
         {
             timeBetweenMoves = _data.GetComponent<StartMenuScript>().speed;
         }
-        _startPos = grid.HexGrid[(0,0,0)];
+
+        _startPos = grid.HexGrid[(0, 0, 0)];
         snekStart.currentHex = _startPos.GetComponent<Hex>();
     }
 
@@ -44,6 +45,7 @@ public class SnekController : MonoBehaviour
                 _nextDirection += 1;
             }
         }
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (_nextDirection - 1 < 0)
@@ -55,7 +57,9 @@ public class SnekController : MonoBehaviour
                 _nextDirection -= 1;
             }
         }
-        arrow.transform.position = grid.GridTranslation(snekStart.currentHex.HexPosition, _nextDirection).transform.position;
+
+        arrow.transform.position =
+            grid.GridTranslation(snekStart.currentHex.HexPosition, _nextDirection).transform.position;
         if (_nextMoveTime > timeBetweenMoves)
         {
             Move();
@@ -66,26 +70,26 @@ public class SnekController : MonoBehaviour
             _nextMoveTime += Time.deltaTime;
         }
     }
+
     private void Move()
     {
-        grid.GridTranslation(snekStart.currentHex.HexPosition, _nextDirection);
-       // if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Food)
+        GameObject potentialPos = grid.GridTranslation(snekStart.currentHex.HexPosition, _nextDirection);
+        if (potentialPos != null) // check for out of bounds
         {
-            scoreKeeper.ScoreChange(10);
-            snekStart.Grow(_nextDirection);
-            foodController.FoodChange();
-        }
-       // else if (snekStart.currentHex.connections[_nextDirection].CompareTag("Wall"))
-        {
-            worldController.Death();
-        }
-      //  else if (snekStart.currentHex.connections[_nextDirection].GetComponent<Hex>().Snek)
-        {
-           worldController.Death();
-        }
-      //  else
-        {
-            snekStart.Move(_nextDirection);
+            if (potentialPos.GetComponent<Hex>().Food)
+            {
+                scoreKeeper.ScoreChange(10);
+                snekStart.Grow(potentialPos.GetComponent<Hex>());
+                foodController.FoodChange();
+            }
+            else if (grid.GridTranslation(snekStart.currentHex.HexPosition, _nextDirection).GetComponent<Hex>().Snek)
+            {
+                worldController.Death();
+            }
+            else
+            {
+                snekStart.Move(potentialPos.GetComponent<Hex>());
+            }
         }
     }
 }

@@ -1,19 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Snek : MonoBehaviour
+public class Snek : MonoBehaviour // The new system is only really grid based for the head of the snake
 {
-    public int previousPos;
+    public Hex previousPos;
     public Hex currentHex;
     public GameObject newSnakeSegment;
     
     private Snek _nextSnek;
     private GameObject _instantiatedSegment;
-    
 
-    public void Move(int newDirection)
+    public void Move(Hex newPosition)
     {
+        //Debug.Log("Tried moving");
         if (_nextSnek)
         {
             _nextSnek.Move(previousPos);
@@ -22,14 +23,15 @@ public class Snek : MonoBehaviour
         {
             currentHex.Snek = false;
         }
-        //transform.position = currentHex
-        //currentHex = currentHex
+        transform.position = newPosition.transform.position;
+        currentHex = newPosition;
         currentHex.Snek = true;
-        previousPos = newDirection;
+        previousPos = newPosition;
     }
 
-    public void Grow(int newDirection)
+    public void Grow(Hex newPosition)
     {
+        Debug.Log("Tried growing");
         if (_nextSnek)
         {
             _nextSnek.Grow(previousPos);
@@ -42,9 +44,9 @@ public class Snek : MonoBehaviour
             _instantiatedSegment.transform.position = transform.position;
             _nextSnek = _instantiatedSegment.GetComponent<Snek>();
         }
-      //  transform.position = currentHex.connections[newDirection].transform.position;
-      //  currentHex = currentHex.connections[newDirection].GetComponent<Hex>();
+        transform.position = newPosition.transform.position;
+        currentHex = newPosition;
         currentHex.Snek = true;
-        previousPos = newDirection;
+        previousPos = newPosition;
     }
 }
