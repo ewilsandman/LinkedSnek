@@ -7,7 +7,6 @@ using UnityEngine;
         public bool Snek;
         public bool Wall;
         public bool Food;
-        //public GameObject Thing;
         public (int, int, int) HexPosition;
         
  }

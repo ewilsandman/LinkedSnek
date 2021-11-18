@@ -6,30 +6,37 @@ using UnityEngine;
 
 public class SeekerScript : MonoBehaviour
 {
-    /*private Hex _initialHex; // same as current position of Snek
+    private Hex _initialHex; // same as current position of Snek
     private Hex _targetHex; // same as food is currently on
 
     public Snek snekHead;
-    public WorldScript world;
+    public GridScript grid;
     public FoodScript foodSource;
 
+    private List<Hex> _currentPath = new List<Hex>();
     private Queue<Hex> _pathToTarget = new Queue<Hex>();
-  /*private List<Hex> _uncheckedHexes = new List<Hex>(); // very useful lol
-    private List<Hex> moveableHexes = new List<Hex>(); #1#
     private Dictionary<Hex, Hex> cameFrom = new Dictionary<Hex, Hex>();
     private Queue<Hex> frontier = new Queue<Hex>();
     private Hex current;
 
     //  private int[] _distance;
     //   private Hex[] _previous;
-    
-    public Queue<Hex> Begin()
+
+    public void Begin()
     {
+        if (_currentPath.Count != 0)
+        {
+            ClearMap();
+        }
         cameFrom.Clear();
         _pathToTarget.Clear();
         _initialHex = snekHead.currentHex;
-        _targetHex = foodSource.foodPosition.GetComponent<Hex>(); 
-        return Search();
+        _targetHex = foodSource.foodPosition.GetComponent<Hex>();
+        foreach (Hex hex in Search())
+        {
+            _currentPath.Add(hex);
+            hex.gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
+        }
     }
     private Queue<Hex> Search() // Breadth first search with early exit
     {
@@ -44,16 +51,17 @@ public class SeekerScript : MonoBehaviour
 
             if (current.gameObject == _targetHex.gameObject)
             {
+                frontier.Clear();
                 break;
             }
 
             for (int neighbours = 0; neighbours < 6; neighbours++)
             {
-                if (cameFrom.ContainsValue(current.connections[neighbours].GetComponent<Hex>())) continue;
-                if (!current.connections[neighbours].GetComponent<Hex>().Wall)
+                if (cameFrom.ContainsKey(grid.GridTranslation(current.HexPosition, neighbours).GetComponent<Hex>())) continue;
+                if (!grid.GridTranslation(current.HexPosition, neighbours).GetComponent<Hex>().Wall)
                 {
-                    frontier.Enqueue(current.connections[neighbours].GetComponent<Hex>());
-                    cameFrom[current.connections[neighbours].GetComponent<Hex>()] = current;
+                    frontier.Enqueue(grid.GridTranslation(current.HexPosition, neighbours).GetComponent<Hex>());
+                    cameFrom[grid.GridTranslation(current.HexPosition, neighbours).GetComponent<Hex>()] = current;
                 }
             }
         }
@@ -62,9 +70,14 @@ public class SeekerScript : MonoBehaviour
         {
             _pathToTarget.Enqueue(current);
             current = cameFrom[current];
-            // optional
-            //  _pathToTarget.reverse() // optional
         }
         return _pathToTarget;
-    }*/
+    }
+    private void ClearMap()
+    {
+        foreach (Hex hex in _currentPath)
+        {
+            hex.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+    }
 }

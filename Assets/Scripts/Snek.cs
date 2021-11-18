@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Snek : MonoBehaviour // The new system is only really grid based for the head of the snake
+public class Snek : MonoBehaviour // The new system is only really grid based for the head of the snake, the rest of the snake relies on its LinkedList
 {
     public Hex previousPos;
     public Hex currentHex;
@@ -14,7 +14,6 @@ public class Snek : MonoBehaviour // The new system is only really grid based fo
 
     public void Move(Hex newPosition)
     {
-        //Debug.Log("Tried moving");
         if (_nextSnek)
         {
             _nextSnek.Move(previousPos);
@@ -31,7 +30,6 @@ public class Snek : MonoBehaviour // The new system is only really grid based fo
 
     public void Grow(Hex newPosition)
     {
-        Debug.Log("Tried growing");
         if (_nextSnek)
         {
             _nextSnek.Grow(previousPos);

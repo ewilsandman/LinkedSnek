@@ -9,7 +9,6 @@ public class GridScript : MonoBehaviour
     public GameObject hex;
 
     public Dictionary<(int, int, int), GameObject> HexGrid; // This is the grid, displays a Hex based on the Cube Grid system
-    public List<(int,int,int)> MirrorPos; // used in mirroring, wrapping
 
     private readonly Vector2 _rOffset = new Vector2(-0.3f, -0.5f); // southwest
     private readonly Vector2 _qOffset = new Vector2(0.6f, 0f); // east
@@ -23,7 +22,6 @@ public class GridScript : MonoBehaviour
     {
         _mapSize = size;
         HexGrid = new Dictionary<(int, int, int), GameObject>();
-        MirrorPos = new List<(int,int,int)>();
         for (int q = -size; q <= size; q++)
         {
             for (int r = -size; r <= size; r++)
@@ -43,7 +41,7 @@ public class GridScript : MonoBehaviour
             }
         }
     }
-    public GameObject GridTranslation((int,int,int) position , int direction)
+    public GameObject GridTranslation((int,int,int) position , int direction) // THIS SYSTEM HAS CAUSED MUCH SUFFERING, HENCE THE VERY DETAILED LOGS
       {
           int q = position.Item1;
           int r = position.Item2;

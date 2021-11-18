@@ -7,6 +7,7 @@ public class FoodScript : MonoBehaviour
     public GameObject food;
     public GameObject boardController;
     public GameObject foodPosition;
+    public SeekerScript foodSearch;
 
     private GameObject _foodInstance;
     // Start is called before the first frame update
@@ -31,5 +32,6 @@ public class FoodScript : MonoBehaviour
         {
             FoodChange();
         }
+        foodSearch.Begin();
     }
 }
