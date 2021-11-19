@@ -12,16 +12,24 @@ public class ExitMenuScript : MonoBehaviour
 
     private void Start()
     {
-        _data = GameObject.FindWithTag("Score");
+        try
+        {
+            _data = GameObject.FindWithTag("Score");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
         if (_data)
         {
             score.text = "Your score: " + _data.GetComponent<ScoreScript>().score;
+            Destroy(_data.gameObject);
         }
         else
         {
             score.text = "Uh oh, something went wrong with your score";
         }
-        Destroy(_data.gameObject);
     }
 
     public void Restart()

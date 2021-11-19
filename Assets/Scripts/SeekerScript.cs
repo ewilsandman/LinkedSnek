@@ -35,7 +35,7 @@ public class SeekerScript : MonoBehaviour
         foreach (Hex hex in Search())
         {
             _currentPath.Add(hex);
-            hex.gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
+            hex.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
     }
     private Queue<Hex> Search() // Breadth first search with early exit
